@@ -1,4 +1,6 @@
 
+// run with nodemon src/app.js -e js,hbs
+
 const path = require('path')
 const express = require('express')
 const hbs = require('hbs')
@@ -6,6 +8,7 @@ const geocode = require('./util/geocode')
 const forecast = require('./util/forecast')
 
 const app = express()
+const port = process.env.PORT || 3000
 
 const dir = path.join(__dirname, "../public")
 app.use(express.static(dir))
@@ -70,23 +73,12 @@ app.get('/weather', (req, res) => {
 
     })
   })
-
-  // pass lat/long to forecast
-/*
-  res.send({
-    location: req.query.address,
-    forecast: "Cold"
-  })*/
 })
 
 app.get('*', (req,res)=>{
   res.render('404')
 })
 
-// use localhost:3000 in browser
-
-app.listen(3000, () => {
-  console.log('server is up on port 3000')
+app.listen(port, () => {
+  console.log('server is up on port ' + port)
 })
-
-// run with nodemon src/app.js -e js,hbs
